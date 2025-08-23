@@ -65,7 +65,11 @@ GLuint CreateShaderProgram(const std::string& vertexShaderSource, const std::str
 }
 
 void CreateGraphicsPipeline(){
-	Globals::gGraphicsPipelineShaderProgram = CreateShaderProgram(Globals::gVertexShaderSource,Globals::gFragmentShaderSource);
+	reader *r = new reader();
+	std::string vs = r->readAsString("../shaders/vertex.txt");
+	std::string fs = r->readAsString("../shaders/fragment.txt");
+	Globals::gGraphicsPipelineShaderProgram = CreateShaderProgram(vs,fs);
+	delete(r);
 }
 
 void init(){

@@ -4,6 +4,7 @@ project(guisdl)
 add_executable(${PROJECT_NAME}
     ./src/main.cpp
     ./glad/src/gl.c
+    ./src/reader.cpp
 )
 
 # Add include directories
