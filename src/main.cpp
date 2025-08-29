@@ -9,20 +9,25 @@ void GetOpenGLVerisionInfo(){
 }
 
 void VertexSpecification(){
-	//on cpu
 	const std::vector<GLfloat> vertexPosition{
 		-0.8f,-0.8f,0.0f,
 		 0.8f,-0.8f,0.0f,
 		 0.0f,0.8f,0.0f,
 	};
-	//gpu setup
+	const std::vector<GLfloat> vertexColors{
+		1.0f,0.0f,0.0f,
+		0.0f,1.0f,0.0f,
+		0.0f,0.0f,1.0f,
+	};
+	//vao
 	glGenVertexArrays(1,&Globals::gVertexArrayObj);
 	glBindVertexArray(Globals::gVertexArrayObj);
 	//vbo
+	//1
 	glGenBuffers(1,&Globals::gVertexBufferObject);
 	glBindBuffer(GL_ARRAY_BUFFER,Globals::gVertexBufferObject);
 	glBufferData(GL_ARRAY_BUFFER,
-		vertexPosition.size()*sizeof(GLfloat),
+		vertexPosition.size()*sizeof(GL_FLOAT),
 		vertexPosition.data(),
 		GL_STATIC_DRAW	
 	);
@@ -34,8 +39,25 @@ void VertexSpecification(){
 		0,
 		(void*)0	
 	);
+
+	//2
+	glGenBuffers(1,&Globals::gVertexBufferObject1);
+	glBindBuffer(GL_ARRAY_BUFFER,Globals::gVertexBufferObject1);
+	glBufferData(GL_ARRAY_BUFFER,
+			vertexColors.size() * sizeof(GLfloat),
+			vertexColors.data(),
+			GL_STATIC_DRAW);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1,
+		3,
+		GL_FLOAT,
+		GL_FALSE, //Normalized?
+		0,//Stride?
+		(void*)0//Offset?
+	);
 	glBindVertexArray(0);
 	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
 }
 
 GLuint CompileShader(GLuint type, const std::string& source){
