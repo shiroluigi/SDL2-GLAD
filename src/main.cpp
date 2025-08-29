@@ -9,15 +9,13 @@ void GetOpenGLVerisionInfo(){
 }
 
 void VertexSpecification(){
-	const std::vector<GLfloat> vertexPosition{
-		-0.8f,-0.8f,0.0f,
-		 0.8f,-0.8f,0.0f,
-		 0.0f,0.8f,0.0f,
-	};
-	const std::vector<GLfloat> vertexColors{
-		1.0f,0.0f,0.0f,
-		0.0f,1.0f,0.0f,
-		0.0f,0.0f,1.0f,
+	const std::vector<GLfloat> vertexData{
+		-0.8f,-0.8f,0.0f, //V
+		 1.0f,0.0f,0.0f,  //C
+		 0.8f,-0.8f,0.0f, //V
+		 0.0f,1.0f,0.0f,  //C
+		 0.0f,0.8f,0.0f,  //V
+		 0.0f,0.0f,1.0f,  //C
 	};
 	//vao
 	glGenVertexArrays(1,&Globals::gVertexArrayObj);
@@ -27,33 +25,26 @@ void VertexSpecification(){
 	glGenBuffers(1,&Globals::gVertexBufferObject);
 	glBindBuffer(GL_ARRAY_BUFFER,Globals::gVertexBufferObject);
 	glBufferData(GL_ARRAY_BUFFER,
-		vertexPosition.size()*sizeof(GL_FLOAT),
-		vertexPosition.data(),
+		vertexData.size()*sizeof(GL_FLOAT),
+		vertexData.data(),
 		GL_STATIC_DRAW	
 	);
+
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0,
 		3,
 		GL_FLOAT,
 		GL_FALSE,
-		0,
-		(void*)0	
+		6 * sizeof(GL_FLOAT),
+		(GLvoid*)0	
 	);
-
-	//2
-	glGenBuffers(1,&Globals::gVertexBufferObject1);
-	glBindBuffer(GL_ARRAY_BUFFER,Globals::gVertexBufferObject1);
-	glBufferData(GL_ARRAY_BUFFER,
-			vertexColors.size() * sizeof(GLfloat),
-			vertexColors.data(),
-			GL_STATIC_DRAW);
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1,
 		3,
 		GL_FLOAT,
-		GL_FALSE, //Normalized?
-		0,//Stride?
-		(void*)0//Offset?
+		GL_FALSE,
+		6 * sizeof(GL_FLOAT),
+		(GLvoid*)(3 * sizeof(GL_FLOAT))	
 	);
 	glBindVertexArray(0);
 	glDisableVertexAttribArray(0);
