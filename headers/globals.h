@@ -13,4 +13,5 @@ class Globals{
         inline static GLuint gVertexArrayObj = 0;
         inline static GLuint gVertexBufferObject = 0;
         inline static GLuint gGraphicsPipelineShaderProgram = 0;
+        inline static GLuint gIndexBufferObject = 0;
 };

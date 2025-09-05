@@ -10,20 +10,18 @@ void GetOpenGLVerisionInfo(){
 
 void VertexSpecification(){
 	const std::vector<GLfloat> vertexData{
+		//0th vertex
 		-0.5f,-0.5f,0.0f, //V
 		 1.0f,0.0f,0.0f,  //C
+		//1st vertex
 		 0.5f,-0.5f,0.0f, //V
 		 0.0f,1.0f,0.0f,  //C
+		//2nd vertex
 		 -0.5f,0.5f,0.0f,  //V
 		 0.0f,0.0f,1.0f,  //C
-
+		//3rd vertex
 		 0.5f,0.5f,0.0f, //V
 		 1.0f,0.0f,0.0f,  //C
-		 -0.5f,0.5f,0.0f, //V
-		 0.0f,0.0f,1.0f,  //C
-		 0.5f,-0.5f,0.0f,  //V
-		 0.0f,1.0f,0.0f,  //C
-
 	};
 	//vao
 	glGenVertexArrays(1,&Globals::gVertexArrayObj);
@@ -37,6 +35,15 @@ void VertexSpecification(){
 		vertexData.data(),
 		GL_STATIC_DRAW	
 	);
+
+	const std::vector<GLuint> indexBufferData {2,0,1,3,2,1};
+
+	glGenBuffers(1,&Globals::gIndexBufferObject);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,Globals::gIndexBufferObject);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+				indexBufferData.size()*sizeof(GLuint),
+				indexBufferData.data(),
+				GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0,
@@ -98,11 +105,10 @@ void init(){
 	if(SDL_Init(SDL_INIT_VIDEO) < 0){
 		std::cout<<"SDL2 Initialization failed"<<std::endl;
 		exit(-1);
-	}else{
+	} else {
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, 1);
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, SDL_GL_CONTEXT_PROFILE_CORE);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 		
@@ -151,7 +157,11 @@ void PreDraw(){
 void Draw(){
 	glBindVertexArray(Globals::gVertexArrayObj);
 	glBindBuffer(GL_ARRAY_BUFFER,Globals::gVertexBufferObject);
-	glDrawArrays(GL_TRIANGLES,0,6);
+	// glDrawArrays(GL_TRIANGLES,0,6);
+	glDrawElements(GL_TRIANGLES,
+					6,
+					GL_UNSIGNED_INT,
+					0);
 }
 
 void loop(){
