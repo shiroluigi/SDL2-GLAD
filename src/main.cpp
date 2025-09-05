@@ -10,12 +10,20 @@ void GetOpenGLVerisionInfo(){
 
 void VertexSpecification(){
 	const std::vector<GLfloat> vertexData{
-		-0.8f,-0.8f,0.0f, //V
+		-0.5f,-0.5f,0.0f, //V
 		 1.0f,0.0f,0.0f,  //C
-		 0.8f,-0.8f,0.0f, //V
+		 0.5f,-0.5f,0.0f, //V
 		 0.0f,1.0f,0.0f,  //C
-		 0.0f,0.8f,0.0f,  //V
+		 -0.5f,0.5f,0.0f,  //V
 		 0.0f,0.0f,1.0f,  //C
+
+		 0.5f,0.5f,0.0f, //V
+		 1.0f,0.0f,0.0f,  //C
+		 -0.5f,0.5f,0.0f, //V
+		 0.0f,0.0f,1.0f,  //C
+		 0.5f,-0.5f,0.0f,  //V
+		 0.0f,1.0f,0.0f,  //C
+
 	};
 	//vao
 	glGenVertexArrays(1,&Globals::gVertexArrayObj);
@@ -143,7 +151,7 @@ void PreDraw(){
 void Draw(){
 	glBindVertexArray(Globals::gVertexArrayObj);
 	glBindBuffer(GL_ARRAY_BUFFER,Globals::gVertexBufferObject);
-	glDrawArrays(GL_TRIANGLES,0,3);
+	glDrawArrays(GL_TRIANGLES,0,6);
 }
 
 void loop(){
